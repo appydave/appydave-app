@@ -108,12 +108,34 @@ touch public/template/rails8.0.rb # Use a paste from URL technique when I am fin
 
 ## What we will cover in the template
 
+
+- RSpec as the default testing framework
+- RuboCop for code linting
+- Guard for automatic testing
+- FactoryBot for test data
 - Authentication
 - Tailwind CSS for styling
-- RSpec as the default testing framework
-- Guard for automatic testing
-- RuboCop for code linting
 - Hotwire/Stimulus for frontend interactivity
+
+### Setup common gems
+
+Gems that are commonly used in Rails applications:
+
+```bash
+r8_next
+run
+gac '1-setup common gems'
+```
+
+### Add Homepage
+
+Simple home page with a welcome message.
+
+```bash
+r8_next
+run
+gac '2-simple home page'
+```
 
 ### Add Homepage
 

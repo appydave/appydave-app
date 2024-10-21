@@ -103,7 +103,6 @@ Rails:
   end
 end
 
-
 class HomePage < Base
   def execute
     generate "controller", "home index --skip-routes"
