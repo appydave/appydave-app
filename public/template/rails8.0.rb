@@ -7,7 +7,102 @@ class Base < Rails::Generators::Base
   def rails(command)
     run("rails #{command}")
   end
+
+  def bundle_install
+    run 'bundle install'
+  end
+
+  def update_database
+    # Run database migrations
+    rails_command "db:migrate"
+
+    # Keep the test database in sync
+    rails_command "db:test:prepare"
+  end
+
+  def cops_autofix
+    run 'bundle exec rubocop -a'
+  end
 end
+
+class CommonGems < Base
+  def execute
+    add_common_development_gems
+    run 'bundle outdated' # Check if there are any outdated gems (May want to remove this from template as it requires installation of the gem before running)
+    setup_rspec
+    setup_rubocop
+    setup_guard
+    setup_factory_bot
+    cops_autofix
+  end
+
+  private
+
+  # Add gems for RSpec, Rubocop, FactoryBot, and Guard
+  def add_common_development_gems
+    inject_into_file 'Gemfile', after: "group :development, :test do\n" do
+      <<-GEMS
+  gem 'rspec-rails', '~> 7.0'
+  gem 'factory_bot_rails', '~> 6.0'
+  gem 'guard', '~> 2.0'
+  gem 'guard-rspec', '~> 4.7'
+  gem 'rubocop', '~> 1.0', require: false
+  gem 'rubocop-rails', '~> 2.0', require: false
+      GEMS
+    end
+  end
+
+  # Set up RSpec by generating the necessary files and configuring RSpec
+  def setup_rspec
+    generate 'rspec:install'
+    append_to_file '.rspec', '--format documentation'
+
+    # Add FactoryBot configuration to RSpec
+    inject_into_file 'spec/rails_helper.rb', after: "RSpec.configure do |config|\n" do
+      "  config.include FactoryBot::Syntax::Methods\n"
+    end
+  end
+
+  # Set up Rubocop by creating a basic .rubocop.yml file
+  def setup_rubocop
+    create_file '.rubocop.yml', force: true do
+      <<-YML
+# Omakase Ruby styling for Rails
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
+
+require:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 3.0
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'config/**/*'
+    - 'vendor/**/*'
+
+Layout/LineLength:
+  Max: 120
+
+Rails:
+  Enabled: true
+      YML
+    end
+  end
+
+  # Initialize Guard for automatic test running
+  def setup_guard
+    run 'bundle exec guard init rspec'
+  end
+
+  # Additional setup for FactoryBot (optional, since it is already configured with RSpec)
+  def setup_factory_bot
+    # FactoryBot is configured with RSpec
+  end
+end
+
 
 class HomePage < Base
   def execute
@@ -178,12 +273,7 @@ class RailsGenerateAuthentication < Base
   def execute
     # Use rails_command to generate authentication
     rails_command("generate authentication")
-
-    # Run database migrations
-    rails_command "db:migrate"
-
-    # Keep the test database in sync
-    rails_command "db:test:prepare"
+    update_database
   end
 end
 
@@ -629,6 +719,7 @@ end
 
 order = 0
 menu = [
+  { id: (order+=1), label: 'Standard Gems', customizations: CommonGems },
   { id: (order+=1), label: 'Home Page', customizations: HomePage },
   { id: (order+=1), label: 'Layout', customizations: Layout },
   { id: (order+=1), label: 'Flash Messages', customizations: Flash },

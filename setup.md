@@ -122,7 +122,7 @@ Simple home page with a welcome message.
 ```bash
 r8_next
 run
-gac '1-simple home page'
+gac '2-simple home page'
 ```
 
 ### Apply Basic Layout
@@ -132,7 +132,7 @@ Add a basic layout with a menu on the left.
 ```bash
 r8_next
 run
-gac '2-update layout and a menu'
+gac '3-update layout and a menu'
 ```
 
 Add simple flash message partial with dynamic style classes using Tailwind CSS.
@@ -140,7 +140,7 @@ Add simple flash message partial with dynamic style classes using Tailwind CSS.
 ```bash
 r8_next
 
-gac '3-add flash message partial'
+gac '4-add flash message partial'
 ```
 
 ### Add Pages
@@ -152,7 +152,7 @@ gac '3-add flash message partial'
 ```bash
 r8_next
 run
-gac '4-add top level pages for about, authentication & account'
+gac '5-add top level pages for about, authentication & account'
 ```
 
 ### Application Setings
@@ -162,7 +162,7 @@ Since we are using RSpec, we will alter the generator configuration to use RSpec
 ```bash
 r8_next
 run
-gac '5-configure RSpec as the default testing framework'
+gac '6-configure RSpec as the default testing framework'
 ```
 
 
@@ -176,7 +176,7 @@ rails generate authentication
 rails db:migrate && rails db:test:prepare
 
 r8_next
-gac '6-rails generate authentication'
+gac '-rails generate authentication'
 ```
 
 gac 'add Rails 8 authentication'
