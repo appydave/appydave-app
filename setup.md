@@ -184,25 +184,42 @@ Since we are using RSpec, we will alter the generator configuration to use RSpec
 ```bash
 r8_next
 run
-gac '6-configure RSpec as the default testing framework'
+gac '6-application settings'
 ```
-
-
 
 ### Authentication
 
 Install the authentication generator:
 
 ```bash
-rails generate authentication
-rails db:migrate && rails db:test:prepare
-
 r8_next
-gac '-rails generate authentication'
+run
+gac '7-rails generate authentication'
 ```
 
-gac 'add Rails 8 authentication'
+
+### Relax Authentication Restrictions
+
+Uncomment the following line PagesController to allow unauthenticated access to the about and authentification pages.
+
+```ruby
+allow_unauthenticated_access only: [ :about, :authentification ]
 ```
+
+# before_action :resume_session, only: [:authentification]
+
+Uncomment the following line in the PagesController when you want provide access to session data on the authentication page.
+
+```ruby
+before_action :resume_session, only: [:authentification]
+```
+
+```bash
+r8_next
+run
+gac '8-authentication relax restrictions'
+```
+
 
 ## Setup Letter Opener so you can preview registration emails in development
 
