@@ -149,6 +149,31 @@ class Pages < Base
   end
 end
 
+class AppplicationSettings < Base
+  def execute
+    add_generator_settings
+  end
+
+  def add_generator_settings
+    gsub_file 'config/application.rb', /config.generators.system_tests = nil/m do
+      <<-RUBY
+config.generators do |g|
+      g.test_framework :rspec,                # Set RSpec as the test framework
+                        fixtures: true,       # Generate fixtures (or factories)
+                        view_specs: true,     # Generate view specs
+                        helper_specs: false,  # Don't generate helper specs
+                        routing_specs: true,  # Generate routing specs
+                        request_specs: true,  # Generate request specs
+                        system_tests: nil     # Disable system test generation inside this block
+
+      # Use FactoryBot for generating test data
+      g.fixture_replacement :factory_bot, dir: "spec/factories"
+    end
+      RUBY
+    end
+  end
+end
+
 class RailsGenerateAuthentication < Base
   def execute
     # Use rails_command to generate authentication
@@ -608,6 +633,7 @@ menu = [
   { id: (order+=1), label: 'Layout', customizations: Layout },
   { id: (order+=1), label: 'Flash Messages', customizations: Flash },
   { id: (order+=1), label: 'Other Pages', customizations: Pages },
+  { id: (order+=1), label: 'Application Settings', customizations: AppplicationSettings },
   { id: (order+=1), label: 'Rails Generate Authentication', customizations: RailsGenerateAuthentication },
   { id: (order+=1), label: 'Authentication Relax Restrictions', customizations: AuthenticationRelaxRestrictions },
   { id: (order+=1), label: 'Authentication', customizations: Authetication },

@@ -96,6 +96,7 @@ Setting up an alias to simplify git add/commit
 ```bash
 alias gac='git add . && git commit -m '
 alias r8_next="rails app:template LOCATION='http://localhost:3000/template/rails8.0.rb'"
+alias run="bin/rails assets:precompile && rs"
 ```
 
 ## Setup Local `rails app:template` Script
@@ -119,9 +120,8 @@ touch public/template/rails8.0.rb # Use a paste from URL technique when I am fin
 Simple home page with a welcome message.
 
 ```bash
-rails app:template LOCATION='http://localhost:3000/template/rails8.0.rb'
-bin/rails assets:precompile
-
+r8_next
+run
 gac '1-simple home page'
 ```
 
@@ -130,16 +130,16 @@ gac '1-simple home page'
 Add a basic layout with a menu on the left.
 
 ```bash
-rails app:template LOCATION='http://localhost:3000/template/rails8.0.rb'
-
+r8_next
+run
 gac '2-update layout and a menu'
 ```
 
 Add simple flash message partial with dynamic style classes using Tailwind CSS.
 
 ```bash
-rails app:template LOCATION='http://localhost:3000/template/rails8.0.rb'
-# 3 - Flash
+r8_next
+
 gac '3-add flash message partial'
 ```
 
@@ -150,9 +150,22 @@ gac '3-add flash message partial'
 - Account requires user to be logged in
 
 ```bash
-rails app:template LOCATION='http://localhost:3000/template/rails8.0.rb'
+r8_next
+run
 gac '4-add top level pages for about, authentication & account'
 ```
+
+### Application Setings
+
+Since we are using RSpec, we will alter the generator configuration to use RSpec instead of MiniTest.
+
+```bash
+r8_next
+run
+gac '5-configure RSpec as the default testing framework'
+```
+
+
 
 ### Authentication
 
@@ -162,8 +175,10 @@ Install the authentication generator:
 rails generate authentication
 rails db:migrate && rails db:test:prepare
 
-rails server # restart, if that doesn't work, try assets:precompile
-rails assets:precompile
+r8_next
+gac '6-rails generate authentication'
+```
+
 gac 'add Rails 8 authentication'
 ```
 
