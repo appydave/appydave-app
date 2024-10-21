@@ -220,6 +220,15 @@ run
 gac '8-authentication relax restrictions'
 ```
 
+### Authentication Enhancement
+
+```bash
+r8_next
+run
+gac '9-authentication enhancement'
+```
+
+
 
 ## Setup Letter Opener so you can preview registration emails in development
 
