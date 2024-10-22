@@ -235,6 +235,18 @@ gac '6-add top level pages for about, authentication & account' && git push && g
 
 > Notice that all pages are accessible, we start adding different levels of restrictions in the future steps.
 
+### Authentication
+
+Install the authentication generator:
+
+```bash
+run
+r8_next
+gac '7-rails generate authentication' && git push && ghb
+```
+
+> Notice that request specs will start to fail because of the authentication restrictions.
+
 ### Lets refactor password mailer test using CursorAI
 
 ```pair-programmer
@@ -253,24 +265,13 @@ spec_helper.rb
 ```
 
 ```bash
-gac '7-refactor mini-test to rspec-test using AI pair programmer (CursorAI)' && git push && ghb
+gac '8-refactor mini-test to rspec-test using AI pair programmer (CursorAI)' && git push && ghb
 ```
 
 ### Check CI
 
 Take a look and fix Linting Issues if any.
 
-### Authentication
-
-Install the authentication generator:
-
-```bash
-run
-r8_next
-gac '8-rails generate authentication' && git push && ghb
-```
-
-> Notice that request specs will start to fail because of the authentication restrictions.
 
 ### Relax Authentication Restrictions
 
