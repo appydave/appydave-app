@@ -520,18 +520,18 @@ class AutheticationEmail < Base
     inject_into_file 'app/models/user.rb', after: "validates :email_address, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }\n" do
       <<-RUBY
 
-    def confirm!
-      update!(confirmed_at: Time.current, confirmation_token: nil)
-    end
-  
-    def confirmed?
-      confirmed_at.present?
-    end
-  
-    def send_confirmation_instructions
-      regenerate_confirmation_token
-      UserMailer.confirmation_instructions(self).deliver_now
-    end
+  def confirm!
+    update!(confirmed_at: Time.current, confirmation_token: nil)
+  end
+
+  def confirmed?
+    confirmed_at.present?
+  end
+
+  def send_confirmation_instructions
+    regenerate_confirmation_token
+    UserMailer.confirmation_instructions(self).deliver_now
+  end
       RUBY
     end
   end
