@@ -48,6 +48,7 @@ module AppydaveApp
 
       # Use FactoryBot for generating test data
       g.fixture_replacement :factory_bot, dir: "spec/factories"
+      g.helper false                         # Disable helper generation
     end
 
   end
