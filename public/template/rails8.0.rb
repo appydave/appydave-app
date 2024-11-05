@@ -281,7 +281,7 @@ end
 
 class RailsGenerateAuthentication < Base
   def execute
-    # Use rails_command to generate authentication
+    # rails generate authentication
     rails_command("generate authentication")
     update_database
   end
