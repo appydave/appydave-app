@@ -103,10 +103,9 @@ gac 'setup documentation and template created' && git push && ghb
 Setting up an alias to simplify git add/commit
 
 ```bash
-alias rs='rails server -p 3001'
-alias gac='git add . && git commit -m '
+alias run="bin/rails assets:precompile && rails server -p 3001"
 alias r8_next="rails app:template LOCATION='http://localhost:3001/template/rails8.0.rb'"
-alias run="bin/rails assets:precompile && rs --port 3001"
+alias gac='git add . && git commit -m '
 ```
 
 ## Other Docs
